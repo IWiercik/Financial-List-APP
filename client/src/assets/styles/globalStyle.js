@@ -8,5 +8,6 @@ export const globalStyle = createGlobalStyle`
     box-sizing: inherit;
     margin: 0;
     padding: 0;
+    color: white ;
 }
 `;
