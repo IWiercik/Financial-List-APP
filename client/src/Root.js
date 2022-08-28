@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'assets/theme/theme';
 import { globalStyle as GlobalStyle } from 'assets/styles/globalStyle';
+import PreAuth from 'layout/PreAuth/PreAuth';
+import MainTemplate from 'layout/MainTemplate/MainTemplate';
+import { RootContainer } from 'Root.style';
 const Root = () => {
   const [serverData, setServerData] = useState([]);
-
   useEffect(() => {
     fetch('/api')
       .then((response) => response.json())
@@ -12,19 +14,12 @@ const Root = () => {
         setServerData(data.users);
       });
   }, []);
-
+  console.log(serverData);
+  const userIsAuthorized = false;
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle></GlobalStyle>
-      <div>
-        {typeof serverData === 'undefined' ? (
-          <p>Loading...</p>
-        ) : (
-          serverData.map((user, index) => {
-            return <p key={index}>{user}</p>;
-          })
-        )}
-      </div>
+      <RootContainer>{userIsAuthorized ? <MainTemplate /> : <PreAuth />}</RootContainer>
     </ThemeProvider>
   );
 };
