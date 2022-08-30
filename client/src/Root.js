@@ -7,14 +7,13 @@ import MainTemplate from 'layout/MainTemplate/MainTemplate';
 import { RootContainer } from 'Root.style';
 const Root = () => {
   const [serverData, setServerData] = useState([]);
-  useEffect(() => {
-    fetch('/api')
-      .then((response) => response.json())
-      .then((data) => {
-        setServerData(data.users);
-      });
-  }, []);
-  console.log(serverData);
+  // useEffect(() => {
+  //   fetch('/api')
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setServerData(data.users);
+  //     });
+  // }, []);
   const userIsAuthorized = false;
   return (
     <ThemeProvider theme={theme}>
