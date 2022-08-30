@@ -13,17 +13,20 @@ function Navigation() {
       <NavbarList>
         <Logo src={LogoImage}></Logo>
         <NavbarListItem to="/Home">
-          <Icon src={Home}></Icon>Home
+          <Icon src={Home}></Icon>
+          <p>Home</p>
         </NavbarListItem>
         <NavbarListItem to="/Login">
-          <Icon src={LoginIcon}></Icon>Login
+          <Icon src={LoginIcon}></Icon>
+          <p>Login</p>
         </NavbarListItem>
         <NavbarListItem to="/Registration">
-          <Icon src={RegisterIcon}></Icon>Register
+          <Icon src={RegisterIcon}></Icon>
+          <p>Register</p>
         </NavbarListItem>
-        <Logout>
+        {/* <Logout>
           <Icon src={LogoutIcon}></Icon>Logout
-        </Logout>
+        </Logout> */}
       </NavbarList>
     </Navbar>
   );
