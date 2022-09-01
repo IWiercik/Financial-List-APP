@@ -1,12 +1,20 @@
+import axios from 'axios';
 import { useState } from 'react';
-import { FormContainer } from 'components/organisms/Form(styled)/Form.style';
+import { FormContainer, AuthButton } from 'components/organisms/Form(styled)/Form.style';
 import { Title } from 'components/atoms/Title/Title.style';
 import LoginFormInput from 'components/atoms/LoginFormInput/LoginFormInput';
-import { AuthButton } from 'components/organisms/Form(styled)/Form.style';
+
 function Login() {
   const initialState = { login: '', password: '' };
   const [loginFormValues, setLoginFormValues] = useState(initialState);
-  const submitHandler = () => {};
+  const submitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post('http://localhost:5000/Login', { login: loginFormValues.login, password: loginFormValues.password })
+      .then((response) => {
+        alert(response.data);
+      });
+  };
   return (
     <FormContainer onSubmit={submitHandler}>
       <Title>Login Form</Title>
@@ -16,6 +24,7 @@ function Login() {
         placeholder="Your-email"
         value={loginFormValues}
         updateValue={setLoginFormValues}
+        required={true}
       />
       <LoginFormInput
         type="password"
@@ -23,6 +32,7 @@ function Login() {
         placeholder="Password"
         value={loginFormValues}
         updateValue={setLoginFormValues}
+        required={true}
       />
       <p className="forgot-password">Forgot Password ?</p>
       <AuthButton>Login</AuthButton>
