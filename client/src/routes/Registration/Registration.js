@@ -1,9 +1,9 @@
+import axios from 'axios';
 import RegisterFormInput from 'components/atoms/RegisterFormInput/RegisterFormInput';
 import { Title } from 'components/atoms/Title/Title.style';
-import { FormContainer } from 'components/organisms/Form(styled)/Form.style';
+import { FormContainer, AuthButton } from 'components/organisms/Form(styled)/Form.style';
 import { useReducer } from 'react';
 import { formReducer } from 'reducers/formReducer';
-import { AuthButton } from 'components/organisms/Form(styled)/Form.style';
 function Registration() {
   const initialState = {
     login: {
@@ -19,9 +19,15 @@ function Registration() {
   };
   const [formAttributes, dispatch] = useReducer(formReducer, initialState);
   const submitHandler = (e) => {
-    const { login, password } = formAttributes;
     e.preventDefault();
-    console.log(login.isValid, password.isValid);
+    const { login, password } = formAttributes;
+    if (login.isValid && password.isValid) {
+      axios
+        .post('http://localhost:5000/Registration', { login: login.value, password: password.value })
+        .then((response) => {
+          alert(response.data);
+        });
+    }
   };
   return (
     <FormContainer onSubmit={submitHandler}>
