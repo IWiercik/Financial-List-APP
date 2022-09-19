@@ -6,7 +6,7 @@ export const formReducer = (state, action) => {
     case 'VALIDATE FORM':
       return {
         ...state,
-        [action.field]: {
+        [action.field]: { // Login or Passowrd
           ...nestedAttributes,
           isValid: action.payload.isValid,
           errorMessage: action.payload.errorMessage,
