@@ -2,14 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const corsOptions = require('./config/corsOptions');
 const { logger } = require('./middleware/logger');
 const errorHandler = require('./middleware/errorHandler');
 const cookieParser = require('cookie-parser');
-const corsOptions = require('./config/corsOptions');
-const path = require('path');
+const connectDB = require('./config/dbConn');
+const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000;
+
+connectDB();
 
 app.use(logger);
 
@@ -21,13 +23,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors(corsOptions));
 
-app.use('/', require('./routes/api')); // Api Route
+app.use('/', require('./routes/api/api')); // Api Route
 app.use('/', require('./routes/preAuth/routes')); //post Routes
-
-mongoose.connect('mongodb://localhost:27017/usersDB');
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+  app.listen(PORT, () => {
+    console.log(`Server listening on ${PORT}`);
+  });
+});
+mongoose.connection.on('error', (err) => {
+  console.log(err);
 });
