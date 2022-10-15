@@ -22,9 +22,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors(corsOptions));
-
-app.use('/', require('./routes/api/api')); // Api Route
-app.use('/', require('./routes/preAuth/routes')); //post Routes
+app.use('/users', require('./routes/userRoutes'));
 
 app.use(errorHandler);
 
@@ -37,3 +35,4 @@ mongoose.connection.once('open', () => {
 mongoose.connection.on('error', (err) => {
   console.log(err);
 });
+
