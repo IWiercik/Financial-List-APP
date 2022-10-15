@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { FormContainer, AuthButton } from 'components/organisms/Form(styled)/Form.style';
 import { Title } from 'components/atoms/Title/Title.style';
@@ -9,11 +8,8 @@ function Login() {
   const [loginFormValues, setLoginFormValues] = useState(initialState);
   const submitHandler = (e) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:5000/Login', { login: loginFormValues.login, password: loginFormValues.password })
-      .then((response) => {
-        alert(response.data);
-      });
+    if (loginFormValues.login && loginFormValues.password) {
+    }
   };
   return (
     <FormContainer onSubmit={submitHandler}>
