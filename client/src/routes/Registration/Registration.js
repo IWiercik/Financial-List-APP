@@ -22,11 +22,9 @@ function Registration() {
     e.preventDefault();
     const { login, password } = formAttributes;
     if (login.isValid && password.isValid) {
-      axios
-        .post('http://localhost:5000/Registration', { login: login.value, password: password.value })
-        .then((response) => {
-          alert(response.data);
-        });
+      axios.post('http://localhost:5000/users', { login: login.value, password: password.value }).then((response) => {
+        console.log(response.data.message);
+      });
     }
   };
   return (
