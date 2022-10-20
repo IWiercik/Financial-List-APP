@@ -4,6 +4,7 @@ import { Title } from 'components/atoms/Title/Title.style';
 import { FormContainer, AuthButton } from 'components/organisms/Form(styled)/Form.style';
 import { useReducer } from 'react';
 import { formReducer } from 'reducers/formReducer';
+import { useAddNewUserMutation } from 'redux/users/usersApiSlice';
 function Registration() {
   const initialState = {
     login: {
@@ -18,13 +19,15 @@ function Registration() {
     },
   };
   const [formAttributes, dispatch] = useReducer(formReducer, initialState);
-  const submitHandler = (e) => {
+  const [addNewUser, { isLoading, isSuccess, isError, error }] = useAddNewUserMutation();
+  const submitHandler = async (e) => {
     e.preventDefault();
     const { login, password } = formAttributes;
+    // console.log(login.value,password.value);
     if (login.isValid && password.isValid) {
-      axios.post('http://localhost:5000/users', { login: login.value, password: password.value }).then((response) => {
-        console.log(response.data.message);
-      });
+      const email = login.value;
+      const pswd = password.value;
+      await addNewUser({ email, pswd }).then((result) => console.log(result.data.message));
     }
   };
   return (

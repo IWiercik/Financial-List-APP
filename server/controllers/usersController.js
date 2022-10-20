@@ -12,7 +12,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 });
 // POST
 const createNewUser = asyncHandler(async (req, res) => {
-  const { login: email, password } = req.body;
+  const { email, pswd: password } = req.body;
   const saltRounds = 10;
 
   //Confirm data
@@ -23,7 +23,6 @@ const createNewUser = asyncHandler(async (req, res) => {
   if (duplicate) {
     return res.status(409).json({ message: 'There is already created account with this email.' });
   }
-
 
   //Hash pasword
   const hashedPwd = await bcrypt.hash(password, saltRounds);
