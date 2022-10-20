@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors(corsOptions));
 app.use('/users', require('./routes/userRoutes'));
+app.use('/auth', require('./routes/authRoutes'));
 
 app.use(errorHandler);
 
