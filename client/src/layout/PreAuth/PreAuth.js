@@ -15,6 +15,7 @@ function PreAuth() {
         <CenterContainer>
           <Routes>
             <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="*" element={<PageNotFound />} />
