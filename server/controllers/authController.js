@@ -3,19 +3,24 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 
+
 //@desc Login
-//@route POST /auth
+//@route POST /auth/login
+//@acces public
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json({ message: 'All fields are required!' });
   }
+
   const foundUser = await User.findOne({ email }).exec();
   if (!foundUser) {
     return res.json({ message: 'Unauthorized! by not found user' });
   }
+
   const match = await bcrypt.compare(password, foundUser.password);
   if (!match) return res.status(401).json({ message: 'Unauthorized! by password' });
+
   const accessToken = jwt.sign(
     {
       UserInfo: {
@@ -44,6 +49,7 @@ const login = asyncHandler(async (req, res) => {
 
 //@desc Refresh
 //@route GET /auth/refresh
+//@acces public  -> refresh access token which can expire
 const refresh = (req, res) => {
   const cookies = req.cookies;
   if (!cookies?.jwt) return res.status(401).json({ message: 'Unathorized! by cookie' });
@@ -70,6 +76,7 @@ const refresh = (req, res) => {
 };
 //@desc Logout
 //@route POST /auth/logout
+//@acces public -> clear cookies if exist
 const logout = (req, res) => {
   console.log('User logged off');
   const cookies = req.cookies;
